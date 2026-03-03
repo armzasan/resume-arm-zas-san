@@ -272,3 +272,190 @@ header {
     transform: skewX(20deg); /* เอียงให้ขนานกับขอบปุ่ม */
     box-shadow: 0 0 10px var(--ark-yellow);
 }
+
+/* เพิ่มเติมจาก style.css เดิม */
+
+:root {
+    --accent-blue: #00E5FF;    /* สีฟ้าสว่างแต่ไม่แสบตา */
+    --accent-orange: #FF3D00;  /* สีส้มตัดสำหรับจุดสำคัญ */
+    --ark-bg: #0F1112;         /* พื้นหลังเข้มแบบเทาหินชนวน */
+    --panel-bg: rgba(25, 28, 30, 0.8); 
+    --glass-border: rgba(0, 229, 255, 0.2);
+    --text-main: #E0E6ED;
+}
+
+/* 1. เพิ่มพื้นหลังตาราง Digital Grid */
+.ui-grid {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 207, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 207, 0, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+    mask-image: radial-gradient(circle, black 30%, transparent 80%);
+}
+
+.corner-border {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--ark-yellow);
+    z-index: 10;
+}
+.top-left { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+.top-right { top: 10px; right: 10px; border-left: none; border-bottom: none; }
+.bottom-left { bottom: 10px; left: 10px; border-right: none; border-top: none; }
+.bottom-right { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
+
+.stat-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    margin: 8px 0 15px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-fill {
+    height: 100%;
+    background: var(--ark-yellow);
+    box-shadow: 0 0 10px var(--ark-yellow);
+    transform: translateX(-100%);
+    animation: fillBar 1.5s cubic-bezier(0.1, 0.5, 0.5, 1) forwards 1s;
+}
+
+@keyframes fillBar {
+    to { transform: translateX(0); }
+}
+
+/* 4. Glitch Effect สำหรับ Text */
+.glitch-text {
+    position: relative;
+    display: inline-block;
+}
+
+.glitch-text::before, .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0.8;
+}
+
+.glitch-text:hover::before {
+    animation: glitch-anim 0.3s infinite;
+    color: #ff00ff;
+    z-index: -1;
+}
+
+@keyframes glitch-anim {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 2px); }
+    40% { transform: translate(3px, -2px); }
+    60% { transform: translate(-3px, -2px); }
+    80% { transform: translate(3px, 2px); }
+    100% { transform: translate(0); }
+}
+
+/* 5. Terminal Box & Typing */
+.terminal-box {
+    background: var(--dark-panel);
+    border: 1px solid rgba(255,207,0,0.2);
+    padding: 15px;
+    position: relative;
+    border-left: 4px solid var(--ark-yellow);
+}
+
+.typing-text {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid var(--ark-yellow);
+    animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--ark-yellow); }
+}
+
+/* 6. Card Reveal Animation */
+.card-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: reveal 0.8s ease-out forwards;
+}
+
+.bio { animation-delay: 0.5s; }
+.stats { animation-delay: 0.8s; }
+
+@keyframes reveal {
+    to { opacity: 1; transform: translateY(0); }
+}
+/* --- ส่วนผสมของวงกลมและสี่เหลี่ยม --- */
+.avatar-frame {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+}
+
+/* วงกลมหมุนรอบนอก (Decorative Ring) */
+.status-ring {
+    position: absolute;
+    top: -5px; left: -5px; right: -5px; bottom: -5px;
+    border: 2px dashed var(--accent-blue);
+    border-radius: 50%;
+    animation: rotateRing 10s linear infinite;
+    opacity: 0.5;
+}
+
+.avatar-circle {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, var(--panel-bg) 0%, #000 100%);
+    border: 3px solid var(--accent-blue);
+    border-radius: 50%; /* วงกลม */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+}
+
+/* สี่เหลี่ยมตัดมุม (Tags) */
+.tag-box {
+    display: inline-block;
+    padding: 2px 12px;
+    font-size: 10px;
+    font-weight: bold;
+    clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); /* สี่เหลี่ยมคางหมู */
+    margin-right: 5px;
+}
+
+.tag-box.blue { background: var(--accent-blue); color: #000; }
+.tag-box.orange { background: var(--accent-orange); color: #fff; }
+
+/* --- Animation ใหม่ --- */
+@keyframes rotateRing {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* การเปลี่ยนสีปุ่มให้ดูฉูดฉาดแต่สมูท */
+.btn-link {
+    background: linear-gradient(45deg, transparent 50%, var(--accent-blue) 50%);
+    background-size: 200% 100%;
+    background-position: left bottom;
+    transition: all 0.4s ease;
+}
+
+.btn-link:hover {
+    background-position: right bottom;
+    color: #000;
+    box-shadow: 0 0 15px var(--accent-blue);
+}

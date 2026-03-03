@@ -8,59 +8,80 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="scanline"></div>
-    <div class="wrapper">
-        <header>
-            <div class="logo-area">
-                <span class="terminal-text">PRTS // SYSTEM_V1.0</span>
-            </div>
-            <div class="status-bar">
-                CONNECTION: <span class="status-online">STABLE</span>
-            </div>
-        </header>
-<nav class="side-menu">
-    <a href="#" class="menu-item active">
-        <span class="menu-content">
-            <span class="icon">◈</span> OPERATORS
-        </span>
-    </a>
-    <a href="#" class="menu-item">
-        <span class="menu-content">
-            <span class="icon">⟡</span>
-            EVENT
-        </span>
-    </a>
-    <a href="#" class="menu-item">
-        <span class="menu-content">
-            <span class="icon">⌕</span>
-            HEADHUNT
-        </span>
-    </a>
-</nav>
+   <div class="scanline"></div>
+<div class="ui-grid"></div> <div class="wrapper">
+    <div class="corner-border top-left"></div>
+    <div class="corner-border top-right"></div>
+    <div class="corner-border bottom-left"></div>
+    <div class="corner-border bottom-right"></div>
+
+    <header>
+        <div class="logo-area">
+            <span class="terminal-text glitch-text" data-text="PRTS // SYSTEM_V1.0">PRTS // SYSTEM_V1.0</span>
+        </div>
+        <div class="status-bar">
+            SYSTEM_INTEGRITY: <span class="status-online">98.4%</span>
+            <span class="separator">|</span>
+            LOCAL_TIME: <span id="clock">00:00:00</span>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <nav class="side-menu">
+            <a href="#" class="menu-item active">
+                <span class="menu-content"><span class="icon">◈</span> OPERATOR_INFO</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="menu-content"><span class="icon">⟡</span> MISSIONS</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="menu-content"><span class="icon">⌕</span> ARCHIVE</span>
+            </a>
+        </nav>
+
         <main>
             <section class="profile-section">
                 <div class="title-block">
-                    <h1>ARMZASAN <span class="operator-id">ID: 2545-CE</span></h1>
-                    <p class="role">COMPUTER ENGINEER / BACKEND DEVELOPER</p>
+                    <div class="decode-animation">
+                        <h1 class="operator-name">ARMZASAN</h1>
+                    </div>
+                    <div class="sub-header">
+                        <span class="operator-id">UID: 2545-CE</span>
+                        <span class="rank-stars">★★★★★★</span>
+                    </div>
+                    <p class="role-tag">BACKEND DEVELOPER / COMPUTER VISION SPECIALIST</p>
                 </div>
                 
                 <div class="content-grid">
-                    <div class="bio">
+                    <div class="bio card-reveal">
                         <h2 class="section-title">[01] BIOGRAPHY</h2>
-                        <p>บัณฑิตวิศวกรรมคอมพิวเตอร์จาก RMUTL Tak มีความเชี่ยวชาญด้าน Computer Vision (OpenCV) และการเชื่อมต่อระบบ PLC</p>
+                        <div class="terminal-box">
+                            <p class="typing-text">บัณฑิตวิศวกรรมคอมพิวเตอร์จาก RMUTL Tak... กำลังประมวลผลข้อมูล... ตรวจพบความเชี่ยวชาญด้าน Computer Vision และ Industrial Systems.</p>
+                        </div>
                     </div>
-
-                    <div class="projects">
-                        <h2 class="section-title">[02] LATEST_MISSION</h2>
-                        <div class="project-card">
-                            <h3>OCR_PTCTE_A</h3>
-                            <p>ระบบตรวจจับข้อความและแยกประเภทพัสดุอัตโนมัติ</p>
-                            <a href="https://github.com/armzasan/ocr_ptcte_a" class="btn-link">VIEW_SOURCE_CODE</a>
+                    <div class="operator-display">
+    <div class="avatar-frame">
+        <div class="status-ring"></div>
+        <div class="avatar-circle">
+            <span class="rank-icon">◈</span>
+        </div>
+    </div>
+    
+    <div class="info-tag-container">
+        <div class="tag-box blue">LEVEL 23</div>
+        <div class="tag-box orange">ELITE 2</div>
+    </div>
+</div>
+                    <div class="stats card-reveal">
+                        <h2 class="section-title">[02] OPERATOR_CAPABILITY</h2>
+                        <div class="stat-group">
+                            <span>PYTHON / GO</span> <div class="stat-bar"><div class="stat-fill" style="width: 85%;"></div></div>
+                            <span>OPENCV</span> <div class="stat-bar"><div class="stat-fill" style="width: 80%;"></div></div>
+                            <span>PLC / IOT</span> <div class="stat-bar"><div class="stat-fill" style="width: 75%;"></div></div>
                         </div>
                     </div>
                 </div>
             </section>
         </main>
     </div>
-</body>
-</html>
+</div>
