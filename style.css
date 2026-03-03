@@ -191,3 +191,84 @@ header {
     75% { opacity: 0.5; }
     100% { opacity: 1; }
 }
+/* style.css */
+
+/* --- ENDFIELD SIDE MENU STYLE --- */
+
+.side-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* ระยะห่างระหว่างปุ่ม */
+    margin-bottom: 40px; /* ดันเนื้อหาด้านล่างลงไป */
+    padding-left: 20px;
+}
+
+.menu-item {
+    position: relative;
+    text-decoration: none;
+    width: 200px; /* ความกว้างปุ่ม */
+    height: 50px; /* ความสูงปุ่ม */
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    
+    /* สีพื้นฐาน (สถานะปกติ - สีเทา) */
+    color: #888; 
+    background: rgba(30, 30, 30, 0.6); /* พื้นหลังสีดำโปร่งแสง */
+    border: 2px solid #555; /* ขอบสีเทา */
+    
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    
+    /* หัวใจสำคัญ: ทำให้ปุ่มเอียง! */
+    transform: skewX(-20deg);
+    
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* อนิเมชั่นสมูทๆ */
+}
+
+/* เนื่องจากเราเอียงปุ่ม ตัวหนังสือข้างในจะเอียงตาม */
+/* เราต้องเอียงเนื้อหาข้างในกลับด้าน เพื่อให้ตัวหนังสือตั้งตรง */
+.menu-content {
+    display: flex;
+    align-items: center;
+    transform: skewX(20deg); /* เอียงกลับด้าน */
+}
+
+.icon {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+
+/* --- สถานะ Hover และ Active (แสงสีเหลือง) --- */
+
+/* เมื่อเอาเมาส์ชี้ หรือเป็นปุ่มที่ Active อยู่ */
+.menu-item:hover,
+.menu-item.active {
+    color: var(--ark-yellow); /* เปลี่ยนตัวหนังสือเป็นสีเหลือง */
+    border-color: var(--ark-yellow); /* เปลี่ยนขอบเป็นสีเหลือง */
+    background: rgba(255, 207, 0, 0.1); /* พื้นหลังเหลืองจางๆ */
+    
+    /* เอฟเฟกต์แสงเรือง (Glow Effect) */
+    box-shadow: 
+        0 0 15px rgba(255, 207, 0, 0.6), /* แสงฟุ้งรอบนอก */
+        inset 0 0 10px rgba(255, 207, 0, 0.2); /* แสงฟุ้งด้านใน */
+        
+    text-shadow: 0 0 8px rgba(255, 207, 0, 0.8); /* ตัวหนังสือเรืองแสง */
+    
+    /* ขยับปุ่มออกมาเล็กน้อยตอนชี้ */
+    transform: skewX(-20deg) translateX(10px);
+}
+
+/* เพิ่มลูกเล่นเส้นขีดเล็กๆ ด้านซ้ายของปุ่ม Active */
+.menu-item.active::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    height: 60%;
+    width: 4px;
+    background-color: var(--ark-yellow);
+    transform: skewX(20deg); /* เอียงให้ขนานกับขอบปุ่ม */
+    box-shadow: 0 0 10px var(--ark-yellow);
+}
