@@ -1,0 +1,61 @@
+:root {
+    --ark-yellow: #FFCF00;
+    --ark-bg: #1A1A1A;
+    --ark-text: #E0E0E0;
+    --ark-blue: #00B0FF;
+}
+
+body {
+    background-color: var(--ark-bg);
+    color: var(--ark-text);
+    font-family: 'JetBrains Mono', monospace;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* แถบสีเหลืองด้านข้างที่เป็นเอกลักษณ์ */
+.wrapper {
+    border-left: 8px solid var(--ark-yellow);
+    min-height: 100vh;
+    padding: 40px;
+}
+
+.section-title {
+    background: #333;
+    color: var(--ark-yellow);
+    padding: 5px 15px;
+    display: inline-block;
+    font-size: 14px;
+    clip-path: polygon(0 0, 90% 0, 100% 100%, 0 100%);
+}
+
+.project-card {
+    border: 1px solid #444;
+    padding: 20px;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    position: relative;
+}
+
+.project-card::after {
+    content: "OP-01";
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 10px;
+    color: #555;
+}
+
+.btn-link {
+    color: var(--ark-blue);
+    text-decoration: none;
+    border: 1px solid var(--ark-blue);
+    padding: 5px 15px;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.btn-link:hover {
+    background: var(--ark-blue);
+    color: black;
+}
