@@ -8,12 +8,30 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="ui-wrapper">
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="glitch-text-large" data-text="INITIALIZING_PRTS">INITIALIZING_PRTS</div>
+            <div class="preloader-sub">ESTABLISHING_LINK_WITH_RMUTL_TAK...</div>
+            
+            <div class="preloader-bar-container">
+                <div id="preloader-bar" class="preloader-bar"></div>
+            </div>
+            
+            <div class="preloader-info">
+                <span id="preloader-percent">0%</span>
+                <span class="loading-status">DECODING_OPERATOR_DATA</span>
+            </div>
+        </div>
+        <div class="glitch-layer layer-1"></div>
+        <div class="glitch-layer layer-2"></div>
+    </div>
+
+    <div class="ui-wrapper" id="main-ui" style="visibility: hidden;">
         <div class="scanline"></div>
         
         <header class="top-nav">
             <div class="system-status">
-                <span class="glitch-text" data-text="PRTS // TERMINAL_V3.1">PRTS // TERMINAL_V3.1</span>
+                <span class="glitch-text" data-text="PRTS // TERMINAL_V3.2">PRTS // TERMINAL_V3.2</span>
                 <span class="sub-status">OPERATOR_ID: 2545-CE</span>
             </div>
             <div class="resources">
@@ -24,15 +42,9 @@
 
         <main class="hub-interface">
             <nav class="left-menu">
-                <a href="#" class="nav-btn active">
-                    <div class="btn-content"><span class="icon">◈</span> OPERATORS</div>
-                </a>
-                <a href="#" class="nav-btn">
-                    <div class="btn-content"><span class="icon">⟡</span> MISSIONS</div>
-                </a>
-                <a href="#" class="nav-btn">
-                    <div class="btn-content"><span class="icon">⌕</span> ARCHIVE</div>
-                </a>
+                <a href="#" class="nav-btn active"><div class="btn-content">◈ OPERATORS</div></a>
+                <a href="#" class="nav-btn"><div class="btn-content">⟡ MISSIONS</div></a>
+                <a href="#" class="nav-btn"><div class="btn-content">⌕ ARCHIVE</div></a>
             </nav>
 
             <div class="center-hub">
@@ -67,8 +79,6 @@
         <div class="system-logs">
             <div class="log-entry">> Initializing PRTS_Core... [OK]</div>
             <div class="log-entry">> Decrypting Operator_File: ARMZASAN</div>
-            <div class="log-entry">> OpenCV_Engine: FUNCTIONAL</div>
-            <div class="log-entry">> Backend_Link: STABLE (2ms)</div>
         </div>
 
         <footer class="bottom-ui">
@@ -83,32 +93,57 @@
                     <div class="exp-bar"><div class="exp-fill"></div></div>
                 </div>
             </div>
-            <div class="control-hints">
-                <span id="clock">00:00:00</span>
-            </div>
+            <div class="control-hints"><span id="clock">00:00:00</span></div>
         </footer>
+    </div>
 
-        <div id="data-modal" class="modal-overlay">
-            <div class="modal-content">
-                <div id="modal-loading" class="modal-loading">
-                    <div class="loading-status">DECODING_ENCRYPTED_DATA...</div>
-                    <div class="progress-container"><div id="loading-bar" class="progress-bar"></div></div>
-                    <div class="loading-percent" id="loading-text">0%</div>
+    <div id="data-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div id="modal-loading" class="modal-loading">
+                <div class="loading-status">DECODING...</div>
+                <div class="progress-container"><div id="loading-bar" class="progress-bar"></div></div>
+            </div>
+            <div id="modal-data" class="modal-data" style="display: none;">
+                <div class="modal-header">
+                    <span id="modal-id">01</span> // <span id="modal-title">TITLE</span>
+                    <button class="close-btn" onclick="closeModal()">✖ CLOSE</button>
                 </div>
-                <div id="modal-data" class="modal-data" style="display: none;">
-                    <div class="modal-header">
-                        <span id="modal-id">01</span> // <span id="modal-title">TITLE</span>
-                        <button class="close-btn" onclick="closeModal()">✖ CLOSE</button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="modal-desc"></p>
-                    </div>
-                </div>
+                <div class="modal-body"><p id="modal-desc"></p></div>
             </div>
         </div>
     </div>
 
     <script>
+        // Preloader Logic
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const mainUI = document.getElementById('main-ui');
+            const preBar = document.getElementById('preloader-bar');
+            const preText = document.getElementById('preloader-percent');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Start Glitch Break Transition
+                    setTimeout(() => {
+                        preloader.classList.add('glitch-out');
+                        setTimeout(() => {
+                            preloader.style.display = 'none';
+                            mainUI.style.visibility = 'visible';
+                            mainUI.classList.add('ui-fade-in');
+                        }, 600);
+                    }, 500);
+                }
+                preBar.style.width = progress + '%';
+                preText.innerText = Math.floor(progress) + '%';
+            }, 100);
+        });
+
+        // 3D Tilt & Clock Logic (Same as before)
         const wrapper = document.querySelector('.ui-wrapper');
         document.addEventListener('mousemove', (e) => {
             const xAxis = (window.innerWidth / 2 - e.pageX) / 100;
@@ -117,43 +152,32 @@
         });
 
         const modal = document.getElementById('data-modal');
-        const loadingScreen = document.getElementById('modal-loading');
-        const dataScreen = document.getElementById('modal-data');
-        const progressBar = document.getElementById('loading-bar');
-        const loadingText = document.getElementById('loading-text');
-
         const dataContent = {
-            '01': { title: 'BIOGRAPHY', desc: 'บัณฑิตวิศวกรรมคอมพิวเตอร์จากมหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา ตาก เกิดปี 2545 เชี่ยวชาญด้าน Computer Vision และมีประสบการณ์ฝึกงานรวม 1 ปี' },
-            '02': { title: 'CAPABILITY', desc: 'ทักษะหลัก: Python (OpenCV, Tesseract OCR), Go, และระบบ Industrial Automation (PLC/IoT) รวมถึงการทำงานกับ NVIDIA Jetson Nano' },
-            '03': { title: 'OCR_PTCTE_A', desc: 'โปรเจกต์พัฒนาระบบตรวจจับข้อความและแยกประเภทพัสดุอัตโนมัติบนสายพานลำเลียง โดยใช้ Python และ Computer Vision' },
-            '04': { title: 'SYSTEM_LOGS', desc: 'Log ล่าสุด: ตรวจพบการโต้ตอบกับระบบ PRTS, การประมวลผลอินเทอร์เฟซเสร็จสิ้น, ข้อมูล Operator ถูกต้องตามฐานข้อมูลกลาง' }
+            '01': { title: 'BIOGRAPHY', desc: 'บัณฑิตวิศวกรรมคอมพิวเตอร์จาก RMUTL Tak เกิดปี 2545 เชี่ยวชาญด้าน Computer Vision...' },
+            '02': { title: 'CAPABILITY', desc: 'Python, Go, OpenCV, PLC, IoT, NVIDIA Jetson Nano...' },
+            '03': { title: 'OCR_PTCTE_A', desc: 'ระบบตรวจจับข้อความและแยกประเภทพัสดุอัตโนมัติ...' },
+            '04': { title: 'SYSTEM_LOGS', desc: 'ตรวจสอบข้อมูล Operator เสร็จสิ้น ระบบเสถียร...' }
         };
 
         function openModal(id) {
             modal.style.display = 'flex';
-            loadingScreen.style.display = 'block';
-            dataScreen.style.display = 'none';
-            let progress = 0;
-            progressBar.style.width = '0%';
-            const interval = setInterval(() => {
-                progress += Math.random() * 20;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        dataScreen.style.display = 'block';
-                        const data = dataContent[id];
-                        document.getElementById('modal-id').innerText = id;
-                        document.getElementById('modal-title').innerText = data.title;
-                        document.getElementById('modal-desc').innerText = data.desc;
-                    }, 400);
+            document.getElementById('modal-loading').style.display = 'block';
+            document.getElementById('modal-data').style.display = 'none';
+            let p = 0;
+            const bar = document.getElementById('loading-bar');
+            const int = setInterval(() => {
+                p += 25;
+                bar.style.width = p + '%';
+                if(p >= 100) {
+                    clearInterval(int);
+                    document.getElementById('modal-loading').style.display = 'none';
+                    document.getElementById('modal-data').style.display = 'block';
+                    document.getElementById('modal-id').innerText = id;
+                    document.getElementById('modal-title').innerText = dataContent[id].title;
+                    document.getElementById('modal-desc').innerText = dataContent[id].desc;
                 }
-                progressBar.style.width = progress + '%';
-                loadingText.innerText = Math.floor(progress) + '%';
-            }, 80);
+            }, 150);
         }
-
         function closeModal() { modal.style.display = 'none'; }
         function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB'); }
         setInterval(updateClock, 1000); updateClock();

@@ -108,6 +108,97 @@ body {
 .progress-container { width: 100%; height: 4px; background: #222; margin: 20px 0; overflow: hidden; }
 .progress-bar { width: 0%; height: 100%; background: var(--end-yellow); transition: width 0.1s; box-shadow: 0 0 10px var(--end-yellow); }
 .loading-status { font-size: 12px; color: var(--end-yellow); letter-spacing: 2px; }
+#preloader {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #000;
+    z-index: 20000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.preloader-content {
+    text-align: center;
+    width: 400px;
+    position: relative;
+    z-index: 2;
+}
+
+.glitch-text-large {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--end-yellow);
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.preloader-sub {
+    font-size: 10px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.preloader-bar-container {
+    width: 100%;
+    height: 2px;
+    background: #111;
+    margin-bottom: 15px;
+}
+
+.preloader-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--end-yellow);
+    box-shadow: 0 0 15px var(--end-yellow);
+    transition: width 0.1s linear;
+}
+
+.preloader-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--end-yellow);
+}
+
+/* --- Glitch Break Effect --- */
+.glitch-out .preloader-content {
+    animation: breakAway 0.4s forwards;
+}
+
+@keyframes breakAway {
+    0% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.1) skewX(20deg); filter: brightness(2) hue-rotate(90deg); opacity: 0.8; }
+    100% { transform: scale(0.5); opacity: 0; filter: brightness(0); }
+}
+
+/* สร้างชั้น Glitch สุ่มสีตอนแตกตัว */
+.glitch-out::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--end-yellow);
+    opacity: 0;
+    animation: flashBreak 0.3s steps(2);
+}
+
+@keyframes flashBreak {
+    0% { opacity: 0.3; transform: translate(10px, -10px); }
+    50% { opacity: 0.1; transform: translate(-20px, 15px); background: #00E5FF; }
+    100% { opacity: 0; }
+}
+
+/* Main UI Fade In */
+.ui-fade-in {
+    animation: uiAppear 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes uiAppear {
+    from { opacity: 0; transform: scale(1.05) translateZ(-100px); filter: blur(10px); }
+    to { opacity: 1; transform: scale(1) translateZ(0); filter: blur(0); }
+}
 
 @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes scanMove { 0% { top: -5%; } 100% { top: 105%; } }
