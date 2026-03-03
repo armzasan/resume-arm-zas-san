@@ -59,3 +59,135 @@ body {
     background: var(--ark-blue);
     color: black;
 }
+/* --- ARKNIGHTS ENDFIELD ANIMATIONS --- */
+
+/* 1. CRT Scanline Effect (เอฟเฟกต์เส้นสแกนหน้าจอ) */
+/* ใช้ประโยชน์จาก div class="scanline" ที่มีอยู่แล้วใน HTML */
+.scanline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px; /* เส้นหนาขึ้นเล็กน้อย */
+    background: linear-gradient(to bottom, rgba(255, 207, 0, 0), rgba(255, 207, 0, 0.5), rgba(255, 207, 0, 0)); /* ไล่สีเหลือง */
+    opacity: 0.7;
+    z-index: 9999; /* ให้อยู่บนสุด */
+    pointer-events: none; /* ไม่ให้ขวางการคลิก */
+    animation: scanMove 4s linear infinite;
+}
+
+/* คีย์เฟรมให้เส้นวิ่งจากบนลงล่าง */
+@keyframes scanMove {
+    0% { top: -5%; opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.7; }
+    100% { top: 105%; opacity: 0; }
+}
+
+/* เพิ่มการกระพริบของหน้าจอภาพรวมแบบละเอียด (Subtle Screen Flicker) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: rgba(255, 255, 255, 0.03);
+    opacity: 0;
+    z-index: 9998;
+    pointer-events: none;
+    animation: subtleFlicker 0.1s infinite;
+}
+
+@keyframes subtleFlicker {
+    0% { opacity: 0.02; }
+    50% { opacity: 0; }
+    100% { opacity: 0.02; }
+}
+
+
+/* 2. Sequence Loading Animations (อนิเมชั่นโหลดข้อมูลทีละส่วน) */
+
+/* คีย์เฟรมสำหรับเลื่อนเข้ามาจากด้านซ้าย */
+@keyframes slideInLeft {
+    0% { opacity: 0; transform: translateX(-30px); filter: blur(2px); }
+    100% { opacity: 1; transform: translateX(0); filter: blur(0px); }
+}
+
+/* คีย์เฟรมสำหรับเลื่อนลงมาจากด้านบน */
+@keyframes slideInDown {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* กำหนดให้ Header โหลดลงมาก่อน */
+header {
+    animation: slideInDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* กำหนดให้ส่วนเนื้อหาหลักค่อยๆ โหลดตามมาทีละบล็อก */
+/* ตั้งค่าเริ่มต้นให้ opacity เป็น 0 เพื่อซ่อนก่อนเริ่มอนิเมชั่น */
+.title-block, .bio, .projects {
+    opacity: 0;
+}
+
+/* Title Block โหลดเป็นลำดับที่ 1 */
+.title-block {
+    animation: slideInLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards; /* รอ 0.3 วิ */
+}
+
+/* Biography โหลดเป็นลำดับที่ 2 */
+.bio {
+    animation: slideInLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards; /* รอ 0.5 วิ */
+}
+
+/* Projects โหลดเป็นลำดับที่ 3 */
+.projects {
+    animation: slideInLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.7s forwards; /* รอ 0.7 วิ */
+}
+
+
+/* 3. Interactive & Status Animations (ลูกเล่นการโต้ตอบ) */
+
+/* ทำให้สถานะ CONNECTION: STABLE กระพริบสีเขียว */
+.status-online {
+    color: #28FF28; /* เปลี่ยนเป็นสีเขียวสว่างแบบ Terminal */
+    text-shadow: 0 0 5px rgba(40, 255, 40, 0.5);
+    animation: connectionPulse 2s ease-in-out infinite;
+}
+
+@keyframes connectionPulse {
+    0%, 100% { opacity: 1; text-shadow: 0 0 5px rgba(40, 255, 40, 0.5); }
+    50% { opacity: 0.5; text-shadow: 0 0 2px rgba(40, 255, 40, 0.2); }
+}
+
+/* เพิ่มเอฟเฟกต์ Glitch เล็กน้อยเมื่อเอาเมาส์ชี้ Project Card */
+.project-card {
+    transition: all 0.3s;
+}
+
+.project-card:hover {
+    border-color: var(--ark-yellow); /* เปลี่ยนขอบเป็นสีเหลือง */
+    box-shadow: 0 0 15px rgba(255, 207, 0, 0.2); /* เพิ่มแสงฟุ้ง */
+    animation: subtleGlitchBorder 0.3s linear 1; /* สั่นขอบเล็กน้อย 1 ครั้ง */
+}
+
+/* ทำให้รหัส OP-01 มุมขวากระพริบถี่ๆ เมื่อ Hover */
+.project-card:hover::after {
+    color: var(--ark-yellow);
+    animation: textFlicker 0.2s infinite;
+}
+
+@keyframes subtleGlitchBorder {
+    0% { transform: translate(0,0); }
+    20% { transform: translate(-2px, 1px); }
+    40% { transform: translate(2px, -1px); }
+    60% { transform: translate(-1px, 1px); }
+    80% { transform: translate(1px, -1px); }
+    100% { transform: translate(0,0); }
+}
+
+@keyframes textFlicker {
+    0% { opacity: 1; }
+    25% { opacity: 0.3; }
+    50% { opacity: 1; }
+    75% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
