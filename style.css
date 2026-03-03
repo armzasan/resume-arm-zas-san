@@ -11,103 +11,7 @@ body {
     font-family: 'JetBrains Mono', monospace;
     margin: 0; overflow: hidden; perspective: 1500px;
 }
-
-.ui-wrapper {
-    height: 100vh; display: flex; flex-direction: column;
-    padding: 30px 60px;
-    background: radial-gradient(circle at center, #151719 0%, #000 100%);
-    transition: transform 0.1s ease-out; transform-style: preserve-3d;
-}
-
-/* --- Decoration --- */
-.scanline {
-    position: fixed; top: 0; left: 0; width: 100%; height: 3px;
-    background: rgba(255, 207, 0, 0.05); z-index: 100;
-    animation: scanMove 10s linear infinite; pointer-events: none;
-}
-
-/* --- [แก้ไข] System Logs: ทำให้กลับมาสวยและกระพริบสมจริง --- */
-.system-logs {
-    position: absolute;
-    bottom: 145px;
-    left: 60px;
-    font-size: 10px;
-    color: var(--end-yellow);
-    z-index: 10;
-    pointer-events: none;
-    text-shadow: 0 0 5px rgba(255, 207, 0, 0.3);
-}
-
-.log-entry {
-    margin-bottom: 5px;
-    opacity: 0;
-    animation: logFlickerIn 0.5s forwards, logPulse 4s infinite;
-}
-
-/* ทำให้ Log แต่ละบรรทัดกะพริบไม่พร้อมกัน (สวยกว่าเดิม) */
-.log-entry:nth-child(1) { animation-delay: 0.2s, 1.0s; }
-.log-entry:nth-child(2) { animation-delay: 0.4s, 2.5s; }
-.log-entry:nth-child(3) { animation-delay: 0.6s, 1.8s; }
-.log-entry:nth-child(4) { animation-delay: 0.8s, 3.2s; }
-
-@keyframes logFlickerIn {
-    0% { opacity: 0; transform: translateX(-15px); }
-    100% { opacity: 0.8; transform: translateX(0); }
-}
-
-@keyframes logPulse {
-    0%, 100% { opacity: 0.8; }
-    5%, 7% { opacity: 0.2; }
-    6% { opacity: 1; }
-    45%, 55% { opacity: 0.4; }
-}
-
-/* --- Layout Parts --- */
-.top-nav { display: flex; justify-content: space-between; border-bottom: 2px solid var(--end-yellow); padding-bottom: 10px; }
-.hub-interface { flex: 1; display: grid; grid-template-columns: 280px 1fr 400px; align-items: center; gap: 30px; }
-
-.nav-btn {
-    text-decoration: none; color: #fff; background: var(--end-glass);
-    padding: 20px; border: 1px solid var(--end-border); margin-bottom: 15px;
-    clip-path: polygon(0 0, 90% 0, 100% 20%, 100% 100%, 10% 100%, 0 80%);
-    transition: 0.3s; display: block;
-}
-.nav-btn.active { background: var(--end-yellow); color: #000; transform: translateX(15px); font-weight: bold; }
-
-.center-hub { position: relative; width: 400px; height: 400px; margin: auto; }
-.outer-ring { position: absolute; width: 100%; height: 100%; border: 1px solid var(--end-border); border-radius: 50%; border-top: 3px solid var(--end-yellow); animation: rotate 30s linear infinite; }
-.map-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--end-yellow); text-align: center; }
-
-.right-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.action-card {
-    background: var(--end-glass); border: 1px solid var(--end-border);
-    padding: 15px; cursor: pointer; transition: 0.3s;
-}
-.action-card:hover { border-color: var(--end-yellow); background: rgba(255,207,0,0.05); transform: scale(1.05); }
-
-.bottom-ui { display: flex; justify-content: space-between; align-items: flex-end; }
-.profile-card {
-    background: #000; border: 1px solid var(--end-yellow); padding: 12px;
-    display: flex; gap: 15px; width: 340px;
-    clip-path: polygon(0 0, 100% 0, 100% 80%, 90% 100%, 0 100%);
-}
-.avatar-box { width: 60px; height: 60px; background: var(--end-yellow); color: #000; display: flex; align-items: center; justify-content: center; font-size: 30px; }
-.exp-bar { height: 3px; background: #222; margin-top: 10px; }
-.exp-fill { width: 85%; height: 100%; background: var(--end-yellow); box-shadow: 0 0 10px var(--end-yellow); }
-
-/* --- Modal & Loading --- */
-.modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.92); display: none; justify-content: center; align-items: center; z-index: 1000;
-}
-.modal-content {
-    width: 550px; background: #111; border: 1px solid var(--end-yellow);
-    padding: 40px; position: relative;
-    clip-path: polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%);
-}
-.progress-container { width: 100%; height: 4px; background: #222; margin: 20px 0; overflow: hidden; }
-.progress-bar { width: 0%; height: 100%; background: var(--end-yellow); transition: width 0.1s; box-shadow: 0 0 10px var(--end-yellow); }
-.loading-status { font-size: 12px; color: var(--end-yellow); letter-spacing: 2px; }
+/* --- Preloader Styles --- */
 #preloader {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -199,6 +103,108 @@ body {
     from { opacity: 0; transform: scale(1.05) translateZ(-100px); filter: blur(10px); }
     to { opacity: 1; transform: scale(1) translateZ(0); filter: blur(0); }
 }
+.ui-wrapper {
+    height: 100vh; display: flex; flex-direction: column;
+    padding: 30px 60px;
+    background: radial-gradient(circle at center, #151719 0%, #000 100%);
+    transition: transform 0.1s ease-out; transform-style: preserve-3d;
+}
 
-@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+/* --- UI Decoration --- */
+.scanline {
+    position: fixed; top: 0; left: 0; width: 100%; height: 3px;
+    background: rgba(255, 207, 0, 0.05); z-index: 100;
+    animation: scanMove 10s linear infinite; pointer-events: none;
+}
 @keyframes scanMove { 0% { top: -5%; } 100% { top: 105%; } }
+
+/* --- Layout --- */
+.top-nav { display: flex; justify-content: space-between; border-bottom: 2px solid var(--end-yellow); padding-bottom: 10px; }
+.hub-interface { flex: 1; display: grid; grid-template-columns: 280px 1fr 400px; align-items: center; gap: 30px; }
+
+/* --- Left Menu --- */
+.nav-btn {
+    text-decoration: none; color: #fff; background: var(--end-glass);
+    padding: 20px; border: 1px solid var(--end-border); margin-bottom: 15px;
+    clip-path: polygon(0 0, 90% 0, 100% 20%, 100% 100%, 10% 100%, 0 80%);
+    transition: 0.3s; display: block;
+}
+.nav-btn.active { background: var(--end-yellow); color: #000; transform: translateX(15px); font-weight: bold; }
+
+/* --- Center Hub --- */
+.center-hub { position: relative; width: 400px; height: 400px; margin: auto; }
+.outer-ring { position: absolute; width: 100%; height: 100%; border: 1px solid var(--end-border); border-radius: 50%; border-top: 3px solid var(--end-yellow); animation: rotate 30s linear infinite; }
+.map-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--end-yellow); text-align: center; }
+
+/* --- Right Cards --- */
+.right-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.action-card {
+    background: var(--end-glass); border: 1px solid var(--end-border);
+    padding: 15px; cursor: pointer; transition: 0.3s;
+}
+.action-card:hover { border-color: var(--end-yellow); background: rgba(255,207,0,0.05); transform: scale(1.05); }
+.active-mission { border-left: 4px solid var(--end-yellow); }
+
+/* --- Bottom Profile --- */
+.bottom-ui { display: flex; justify-content: space-between; align-items: flex-end; }
+.profile-card {
+    background: #000; border: 1px solid var(--end-yellow); padding: 12px;
+    display: flex; gap: 15px; width: 340px;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 90% 100%, 0 100%);
+}
+.avatar-box { width: 60px; height: 60px; background: var(--end-yellow); color: #000; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+.exp-bar { height: 3px; background: #222; margin-top: 10px; }
+.exp-fill { width: 85%; height: 100%; background: var(--end-yellow); box-shadow: 0 0 10px var(--end-yellow); }
+
+/* --- Modal & Loading --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 1000;
+}
+.modal-content {
+    width: 500px; background: #111; border: 1px solid var(--end-yellow);
+    padding: 40px; position: relative; text-align: center;
+    clip-path: polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%);
+}
+
+.modal-loading { padding: 20px; }
+.progress-container { width: 100%; height: 4px; background: #222; margin: 20px 0; overflow: hidden; }
+.progress-bar { width: 0%; height: 100%; background: var(--end-yellow); transition: width 0.1s; }
+.loading-status { font-size: 12px; color: var(--end-yellow); letter-spacing: 2px; }
+
+.modal-header { display: flex; justify-content: space-between; color: var(--end-yellow); font-weight: bold; border-bottom: 1px solid var(--end-border); padding-bottom: 10px; margin-bottom: 20px; }
+.close-btn { background: none; border: none; color: #fff; cursor: pointer; font-family: inherit; }
+.system-logs {
+    position: absolute;
+    bottom: 145px;
+    left: 60px;
+    font-size: 10px;
+    color: var(--end-yellow);
+    z-index: 10;
+    pointer-events: none;
+    text-shadow: 0 0 5px rgba(255, 207, 0, 0.3);
+}
+.log-entry {
+    margin-bottom: 5px;
+    opacity: 0;
+    animation: logFlickerIn 0.5s forwards, logPulse 4s infinite;
+}
+
+/* ทำให้ Log แต่ละบรรทัดกะพริบไม่พร้อมกัน (สวยกว่าเดิม) */
+.log-entry:nth-child(1) { animation-delay: 0.2s, 1.0s; }
+.log-entry:nth-child(2) { animation-delay: 0.4s, 2.5s; }
+.log-entry:nth-child(3) { animation-delay: 0.6s, 1.8s; }
+.log-entry:nth-child(4) { animation-delay: 0.8s, 3.2s; }
+
+@keyframes logFlickerIn {
+    0% { opacity: 0; transform: translateX(-15px); }
+    100% { opacity: 0.8; transform: translateX(0); }
+}
+
+@keyframes logPulse {
+    0%, 100% { opacity: 0.8; }
+    5%, 7% { opacity: 0.2; }
+    6% { opacity: 1; }
+    45%, 55% { opacity: 0.4; }
+}
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

@@ -25,13 +25,12 @@
         <div class="glitch-layer layer-1"></div>
         <div class="glitch-layer layer-2"></div>
     </div>
-
-    <div class="ui-wrapper" id="main-ui" style="visibility: hidden;">
+    <div class="ui-wrapper">
         <div class="scanline"></div>
         
         <header class="top-nav">
             <div class="system-status">
-                <span class="glitch-text" data-text="PRTS // TERMINAL_V3.2">PRTS // TERMINAL_V3.2</span>
+                <span class="glitch-text" data-text="PRTS // TERMINAL_V3.0">PRTS // TERMINAL_V3.0</span>
                 <span class="sub-status">OPERATOR_ID: 2545-CE</span>
             </div>
             <div class="resources">
@@ -42,9 +41,15 @@
 
         <main class="hub-interface">
             <nav class="left-menu">
-                <a href="#" class="nav-btn active"><div class="btn-content">◈ OPERATORS</div></a>
-                <a href="#" class="nav-btn"><div class="btn-content">⟡ MISSIONS</div></a>
-                <a href="#" class="nav-btn"><div class="btn-content">⌕ ARCHIVE</div></a>
+                <a href="#" class="nav-btn active">
+                    <div class="btn-content"><span class="icon">◈</span> OPERATORS</div>
+                </a>
+                <a href="#" class="nav-btn">
+                    <div class="btn-content"><span class="icon">⟡</span> MISSIONS</div>
+                </a>
+                <a href="#" class="nav-btn">
+                    <div class="btn-content"><span class="icon">⌕</span> ARCHIVE</div>
+                </a>
             </nav>
 
             <div class="center-hub">
@@ -77,8 +82,9 @@
         </main>
 
         <div class="system-logs">
-            <div class="log-entry">> Initializing PRTS_Core... [OK]</div>
-            <div class="log-entry">> Decrypting Operator_File: ARMZASAN</div>
+            <div class="log-entry">> PRTS_SYSTEM_READY</div>
+            <div class="log-entry">> ENCRYPTED_LINK_STABLE</div>
+            <div class="log-entry">> WAITING_FOR_INPUT...</div>
         </div>
 
         <footer class="bottom-ui">
@@ -93,94 +99,139 @@
                     <div class="exp-bar"><div class="exp-fill"></div></div>
                 </div>
             </div>
-            <div class="control-hints"><span id="clock">00:00:00</span></div>
-        </footer>
-    </div>
-
-    <div id="data-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div id="modal-loading" class="modal-loading">
-                <div class="loading-status">DECODING...</div>
-                <div class="progress-container"><div id="loading-bar" class="progress-bar"></div></div>
+            <div class="control-hints">
+                <span id="clock">00:00:00</span>
             </div>
-            <div id="modal-data" class="modal-data" style="display: none;">
-                <div class="modal-header">
-                    <span id="modal-id">01</span> // <span id="modal-title">TITLE</span>
-                    <button class="close-btn" onclick="closeModal()">✖ CLOSE</button>
+        </footer>
+
+        <div id="data-modal" class="modal-overlay">
+            <div class="modal-content">
+                <div id="modal-loading" class="modal-loading">
+                    <div class="loading-status">DECODING_ENCRYPTED_DATA...</div>
+                    <div class="progress-container">
+                        <div id="loading-bar" class="progress-bar"></div>
+                    </div>
+                    <div class="loading-percent" id="loading-text">0%</div>
                 </div>
-                <div class="modal-body"><p id="modal-desc"></p></div>
+
+                <div id="modal-data" class="modal-data" style="display: none;">
+                    <div class="modal-header">
+                        <span id="modal-id">01</span> // <span id="modal-title">TITLE</span>
+                        <button class="close-btn" onclick="closeModal()">✖ CLOSE</button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="modal-desc"></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Preloader Logic
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            const mainUI = document.getElementById('main-ui');
-            const preBar = document.getElementById('preloader-bar');
-            const preText = document.getElementById('preloader-percent');
-            
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 10;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    
-                    // Start Glitch Break Transition
-                    setTimeout(() => {
-                        preloader.classList.add('glitch-out');
-                        setTimeout(() => {
-                            preloader.style.display = 'none';
-                            mainUI.style.visibility = 'visible';
-                            mainUI.classList.add('ui-fade-in');
-                        }, 600);
-                    }, 500);
-                }
-                preBar.style.width = progress + '%';
-                preText.innerText = Math.floor(progress) + '%';
-            }, 100);
-        });
+        // 1. Mouse 3D Tilt
+        // ปรับปรุงส่วน 3D Tilt ให้สมดุลขึ้น
+const wrapper = document.querySelector('.ui-wrapper');
+document.addEventListener('mousemove', (e) => {
+    // ใช้ window.innerWidth/Height เพื่อคำนวณสัดส่วนที่ถูกต้องกับขนาดหน้าจอจริง
+    const xBase = (window.innerWidth / 2 - e.pageX) / (window.innerWidth / 15);
+    const yBase = (window.innerHeight / 2 - e.pageY) / (window.innerHeight / 15);
+    
+    // จำกัดไม่ให้เอียงเกิน 10 องศา (ป้องกัน UI หลุดขอบ)
+    const xAxis = Math.max(Math.min(xBase, 10), -10);
+    const yAxis = Math.max(Math.min(yBase, 10), -10);
 
-        // 3D Tilt & Clock Logic (Same as before)
-        const wrapper = document.querySelector('.ui-wrapper');
-        document.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 100;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 100;
-            wrapper.style.transform = `rotateY(${-xAxis}deg) rotateX(${yAxis}deg)`;
-        });
+    wrapper.style.transform = `rotateY(${-xAxis}deg) rotateX(${yAxis}deg)`;
+});
 
+        // 2. Modal Logic with Loading Bar
         const modal = document.getElementById('data-modal');
+        const loadingScreen = document.getElementById('modal-loading');
+        const dataScreen = document.getElementById('modal-data');
+        const progressBar = document.getElementById('loading-bar');
+        const loadingText = document.getElementById('loading-text');
+
         const dataContent = {
-            '01': { title: 'BIOGRAPHY', desc: 'บัณฑิตวิศวกรรมคอมพิวเตอร์จาก RMUTL Tak เกิดปี 2545 เชี่ยวชาญด้าน Computer Vision...' },
-            '02': { title: 'CAPABILITY', desc: 'Python, Go, OpenCV, PLC, IoT, NVIDIA Jetson Nano...' },
-            '03': { title: 'OCR_PTCTE_A', desc: 'ระบบตรวจจับข้อความและแยกประเภทพัสดุอัตโนมัติ...' },
-            '04': { title: 'SYSTEM_LOGS', desc: 'ตรวจสอบข้อมูล Operator เสร็จสิ้น ระบบเสถียร...' }
+            '01': { title: 'BIOGRAPHY', desc: 'บัณฑิตวิศวกรรมคอมพิวเตอร์จาก RMUTL Tak มีความเชี่ยวชาญด้าน Computer Vision และระบบประมวลผลหลังบ้าน (Backend Developer) มีประสบการณ์ฝึกงานรวม 1 ปี' },
+            '02': { title: 'CAPABILITY', desc: 'เชี่ยวชาญการใช้ Python (OpenCV, Tesseract OCR), ภาษา Go สำหรับระบบ Scalable Backend และมีความรู้ด้านฮาร์ดแวร์ เช่น PLC, IoT และ NVIDIA Jetson Nano' },
+            '03': { title: 'OCR_PTCTE_A', desc: 'ระบบตรวจจับข้อความและแยกประเภทพัสดุอัตโนมัติ พัฒนาด้วย Python และ OpenCV เพื่อเพิ่มประสิทธิภาพในกระบวนการโลจิสติกส์' },
+            '04': { title: 'SYSTEM_LOGS', desc: 'บันทึกกิจกรรมล่าสุด: ระบบเสถียร 98.4%, ตรวจพบการอัปเกรดโมดูล UI เป็นเวอร์ชัน Arknights_Endfield_Style' }
         };
 
         function openModal(id) {
             modal.style.display = 'flex';
-            document.getElementById('modal-loading').style.display = 'block';
-            document.getElementById('modal-data').style.display = 'none';
-            let p = 0;
-            const bar = document.getElementById('loading-bar');
-            const int = setInterval(() => {
-                p += 25;
-                bar.style.width = p + '%';
-                if(p >= 100) {
-                    clearInterval(int);
-                    document.getElementById('modal-loading').style.display = 'none';
-                    document.getElementById('modal-data').style.display = 'block';
-                    document.getElementById('modal-id').innerText = id;
-                    document.getElementById('modal-title').innerText = dataContent[id].title;
-                    document.getElementById('modal-desc').innerText = dataContent[id].desc;
+            loadingScreen.style.display = 'block';
+            dataScreen.style.display = 'none';
+            
+            // Reset loading bar
+            let progress = 0;
+            progressBar.style.width = '0%';
+            loadingText.innerText = '0%';
+
+            // Start Loading Animation
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Show Data after loading
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        dataScreen.style.display = 'block';
+                        
+                        const data = dataContent[id];
+                        document.getElementById('modal-id').innerText = id;
+                        document.getElementById('modal-title').innerText = data.title;
+                        document.getElementById('modal-desc').innerText = data.desc;
+                    }, 300);
                 }
-            }, 150);
+                progressBar.style.width = progress + '%';
+                loadingText.innerText = Math.floor(progress) + '%';
+            }, 100);
         }
-        function closeModal() { modal.style.display = 'none'; }
-        function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB'); }
-        setInterval(updateClock, 1000); updateClock();
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // 3. Clock
+        function updateClock() {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB');
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+        // 0. Preloader Logic (เพิ่มส่วนนี้เข้าไปครับ)
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    const preBar = document.getElementById('preloader-bar');
+    const preText = document.getElementById('preloader-percent');
+    
+    let progress = 0;
+    const interval = setInterval(() => {
+        // สุ่มเพิ่มค่า progress
+        progress += Math.random() * 10;
+        
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            
+            // เมื่อโหลดเสร็จ ให้หน่วงเวลาเล็กน้อยแล้วค่อยหายไป
+            setTimeout(() => {
+                // เพิ่ม class 'glitch-out' เพื่อเล่นอนิเมชั่นตอนจบ (ถ้ามีใน CSS)
+                preloader.classList.add('glitch-out');
+                
+                // สั่งซ่อน Preloader หลังจากอนิเมชั่นจบ
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 600);
+            }, 500);
+        }
+        
+        // อัปเดต UI ของหน้าโหลด
+        if(preBar) preBar.style.width = progress + '%';
+        if(preText) preText.innerText = Math.floor(progress) + '%';
+    }, 100);
+});
     </script>
 </body>
 </html>
