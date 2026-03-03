@@ -3,85 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rhodes Island Terminal | ARMZASAN</title>
+    <title>Endfield Terminal | ARMZASAN</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-   <div class="scanline"></div>
-<div class="ui-grid"></div> <div class="wrapper">
-    <div class="corner-border top-left"></div>
-    <div class="corner-border top-right"></div>
-    <div class="corner-border bottom-left"></div>
-    <div class="corner-border bottom-right"></div>
+    <div class="ui-wrapper">
+        <div class="scanline"></div>
+        
+        <header class="top-nav">
+            <div class="system-status">
+                <span class="glitch-text" data-text="PRTS // TERMINAL_V3.1">PRTS // TERMINAL_V3.1</span>
+                <span class="sub-status">OPERATOR_ID: 2545-CE</span>
+            </div>
+            <div class="resources">
+                <div class="res-item"><span>TRUST</span> <strong>200%</strong></div>
+                <div class="res-item"><span>STABLE</span> <strong>98.4%</strong></div>
+            </div>
+        </header>
 
-    <header>
-        <div class="logo-area">
-            <span class="terminal-text glitch-text" data-text="PRTS // SYSTEM_V1.0">PRTS // SYSTEM_V1.0</span>
-        </div>
-        <div class="status-bar">
-            SYSTEM_INTEGRITY: <span class="status-online">98.4%</span>
-            <span class="separator">|</span>
-            LOCAL_TIME: <span id="clock">00:00:00</span>
-        </div>
-    </header>
+        <main class="hub-interface">
+            <nav class="left-menu">
+                <a href="#" class="nav-btn active">
+                    <div class="btn-content"><span class="icon">◈</span> OPERATORS</div>
+                </a>
+                <a href="#" class="nav-btn">
+                    <div class="btn-content"><span class="icon">⟡</span> MISSIONS</div>
+                </a>
+                <a href="#" class="nav-btn">
+                    <div class="btn-content"><span class="icon">⌕</span> ARCHIVE</div>
+                </a>
+            </nav>
 
-    <div class="main-container">
-        <nav class="side-menu">
-            <a href="#" class="menu-item active">
-                <span class="menu-content"><span class="icon">◈</span> OPERATOR_INFO</span>
-            </a>
-            <a href="#" class="menu-item">
-                <span class="menu-content"><span class="icon">⟡</span> MISSIONS</span>
-            </a>
-            <a href="#" class="menu-item">
-                <span class="menu-content"><span class="icon">⌕</span> ARCHIVE</span>
-            </a>
-        </nav>
-
-        <main>
-            <section class="profile-section">
-                <div class="title-block">
-                    <div class="decode-animation">
-                        <h1 class="operator-name">ARMZASAN</h1>
-                    </div>
-                    <div class="sub-header">
-                        <span class="operator-id">UID: 2545-CE</span>
-                        <span class="rank-stars">★★★★★★</span>
-                    </div>
-                    <p class="role-tag">BACKEND DEVELOPER / COMPUTER VISION SPECIALIST</p>
+            <div class="center-hub">
+                <div class="outer-ring"></div>
+                <div class="inner-ring"></div>
+                <div class="map-overlay">
+                    <div class="location-tag">THE HUB: RMUTL_TAK</div>
+                    <div class="coord-tag">17.29 N / 99.12 E</div>
                 </div>
-                
-                <div class="content-grid">
-                    <div class="bio card-reveal">
-                        <h2 class="section-title">[01] BIOGRAPHY</h2>
-                        <div class="terminal-box">
-                            <p class="typing-text">บัณฑิตวิศวกรรมคอมพิวเตอร์จาก RMUTL Tak... กำลังประมวลผลข้อมูล... ตรวจพบความเชี่ยวชาญด้าน Computer Vision และ Industrial Systems.</p>
-                        </div>
-                    </div>
-                    <div class="operator-display">
-    <div class="avatar-frame">
-        <div class="status-ring"></div>
-        <div class="avatar-circle">
-            <span class="rank-icon">◈</span>
-        </div>
-    </div>
-    
-    <div class="info-tag-container">
-        <div class="tag-box blue">LEVEL 23</div>
-        <div class="tag-box orange">ELITE 2</div>
-    </div>
-</div>
-                    <div class="stats card-reveal">
-                        <h2 class="section-title">[02] OPERATOR_CAPABILITY</h2>
-                        <div class="stat-group">
-                            <span>PYTHON / GO</span> <div class="stat-bar"><div class="stat-fill" style="width: 85%;"></div></div>
-                            <span>OPENCV</span> <div class="stat-bar"><div class="stat-fill" style="width: 80%;"></div></div>
-                            <span>PLC / IOT</span> <div class="stat-bar"><div class="stat-fill" style="width: 75%;"></div></div>
-                        </div>
-                    </div>
+            </div>
+
+            <section class="right-grid">
+                <div class="action-card" onclick="openModal('01')">
+                    <div class="card-id">01 / BIOGRAPHY</div>
+                    <p>ACCESS_BIO_DATA...</p>
+                </div>
+                <div class="action-card" onclick="openModal('02')">
+                    <div class="card-id">02 / CAPABILITY</div>
+                    <div class="tech-tags"><span>#CV</span> <span>#GO</span> <span>#PLC</span></div>
+                </div>
+                <div class="action-card active-mission" onclick="openModal('03')">
+                    <div class="card-id">03 / LATEST_MISSION</div>
+                    <h3>OCR_PTCTE_A</h3>
+                </div>
+                <div class="action-card" onclick="openModal('04')">
+                    <div class="card-id">04 / SYSTEM_LOGS</div>
+                    <p>VIEW_HISTORY</p>
                 </div>
             </section>
         </main>
+
+        <div class="system-logs">
+            <div class="log-entry">> Initializing PRTS_Core... [OK]</div>
+            <div class="log-entry">> Decrypting Operator_File: ARMZASAN</div>
+            <div class="log-entry">> OpenCV_Engine: FUNCTIONAL</div>
+            <div class="log-entry">> Backend_Link: STABLE (2ms)</div>
+        </div>
+
+        <footer class="bottom-ui">
+            <div class="profile-card">
+                <div class="avatar-box">◈</div>
+                <div class="operator-info">
+                    <div class="name-row">
+                        <span class="op-name">ARMZASAN</span>
+                        <span class="op-lv">LV. 23</span>
+                    </div>
+                    <div class="uid-row">UID: 01592002-CE</div>
+                    <div class="exp-bar"><div class="exp-fill"></div></div>
+                </div>
+            </div>
+            <div class="control-hints">
+                <span id="clock">00:00:00</span>
+            </div>
+        </footer>
+
+        <div id="data-modal" class="modal-overlay">
+            <div class="modal-content">
+                <div id="modal-loading" class="modal-loading">
+                    <div class="loading-status">DECODING_ENCRYPTED_DATA...</div>
+                    <div class="progress-container"><div id="loading-bar" class="progress-bar"></div></div>
+                    <div class="loading-percent" id="loading-text">0%</div>
+                </div>
+                <div id="modal-data" class="modal-data" style="display: none;">
+                    <div class="modal-header">
+                        <span id="modal-id">01</span> // <span id="modal-title">TITLE</span>
+                        <button class="close-btn" onclick="closeModal()">✖ CLOSE</button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="modal-desc"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    <script>
+        const wrapper = document.querySelector('.ui-wrapper');
+        document.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 100;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 100;
+            wrapper.style.transform = `rotateY(${-xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        const modal = document.getElementById('data-modal');
+        const loadingScreen = document.getElementById('modal-loading');
+        const dataScreen = document.getElementById('modal-data');
+        const progressBar = document.getElementById('loading-bar');
+        const loadingText = document.getElementById('loading-text');
+
+        const dataContent = {
+            '01': { title: 'BIOGRAPHY', desc: 'บัณฑิตวิศวกรรมคอมพิวเตอร์จากมหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา ตาก เกิดปี 2545 เชี่ยวชาญด้าน Computer Vision และมีประสบการณ์ฝึกงานรวม 1 ปี' },
+            '02': { title: 'CAPABILITY', desc: 'ทักษะหลัก: Python (OpenCV, Tesseract OCR), Go, และระบบ Industrial Automation (PLC/IoT) รวมถึงการทำงานกับ NVIDIA Jetson Nano' },
+            '03': { title: 'OCR_PTCTE_A', desc: 'โปรเจกต์พัฒนาระบบตรวจจับข้อความและแยกประเภทพัสดุอัตโนมัติบนสายพานลำเลียง โดยใช้ Python และ Computer Vision' },
+            '04': { title: 'SYSTEM_LOGS', desc: 'Log ล่าสุด: ตรวจพบการโต้ตอบกับระบบ PRTS, การประมวลผลอินเทอร์เฟซเสร็จสิ้น, ข้อมูล Operator ถูกต้องตามฐานข้อมูลกลาง' }
+        };
+
+        function openModal(id) {
+            modal.style.display = 'flex';
+            loadingScreen.style.display = 'block';
+            dataScreen.style.display = 'none';
+            let progress = 0;
+            progressBar.style.width = '0%';
+            const interval = setInterval(() => {
+                progress += Math.random() * 20;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        dataScreen.style.display = 'block';
+                        const data = dataContent[id];
+                        document.getElementById('modal-id').innerText = id;
+                        document.getElementById('modal-title').innerText = data.title;
+                        document.getElementById('modal-desc').innerText = data.desc;
+                    }, 400);
+                }
+                progressBar.style.width = progress + '%';
+                loadingText.innerText = Math.floor(progress) + '%';
+            }, 80);
+        }
+
+        function closeModal() { modal.style.display = 'none'; }
+        function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB'); }
+        setInterval(updateClock, 1000); updateClock();
+    </script>
+</body>
+</html>
